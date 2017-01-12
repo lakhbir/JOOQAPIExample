@@ -5,7 +5,7 @@
     <groupId>com.singh</groupId>
     <artifactId>JOOQAPIExample</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>JOOQAPIExample</name>
 
@@ -46,12 +46,10 @@
 
     <build>
         <plugins>
-					
-					
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -69,7 +67,7 @@
                 </configuration>
             </plugin>
 						
-            <plugin>
+<!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.10</version>
@@ -93,10 +91,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-						
-						
-						
+            </plugin>-->
 						
 					<plugin>
 
@@ -110,7 +105,7 @@
 											 Import the others manually from your distribution -->
 						<groupId>org.jooq</groupId>
 						<artifactId>jooq-codegen-maven</artifactId>
-						<version>3.9.0</version>
+						<version>3.6.4</version>
 
 						<!-- The plugin should hook into the generate goal -->
 						<executions>
@@ -160,8 +155,8 @@
 									<!--<inputCatalog>test</inputCatalog>-->
 								</database>
 								<target>
-									<packageName>com.singh.generated</packageName>
-									<directory>target/generated-sources/jooq</directory>
+									<packageName>com.soul.generated</packageName>
+									<!--<directory>src/main/java</directory>-->
 								</target>
 							</generator>
 						</configuration>
