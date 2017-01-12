@@ -5,7 +5,9 @@
  */
 package com.soul;
 
+import static com.soul.generated.Tables.ADDRESS;
 import static com.soul.generated.tables.Customer.CUSTOMER;
+import com.soul.generated.tables.records.AddressRecord;
 import com.soul.generated.tables.records.CustomerRecord;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -53,6 +55,38 @@ public class Main {
 		}
 	}
 	//==========================================================================================================
+	private void update(DSLContext create){
+		print ("\nUpdating Customer Email.");
+		create.update(CUSTOMER)
+						.set(CUSTOMER.EMAIL,"Jack@yahoo.com")
+						.where(CUSTOMER.CUSTOMER_ID.equal(10))
+						.execute();
+	}
+	//==========================================================================================================
+	//==========================================================================================================
+	//==========================================================================================================
+	//==========================================================================================================
+	private void joinGenericBeanRecord(DSLContext create){
+		print ("\nMultiple Join Generic Bean");
+		Result<Record> records = 
+						create.select().from(CUSTOMER).
+										join(ADDRESS).on(CUSTOMER.CUSTOMER_ID.equal(ADDRESS.CUSTOMER_ID)).
+										fetch();
+		
+		print ("\nAll Records");
+		for(Record record : records)	print (record.toString());
+		
+		Result<CustomerRecord> customers = records.into(CUSTOMER);
+		Result<AddressRecord> addresses = records.into(ADDRESS);
+		
+		print ("\nCustomers");
+		for(CustomerRecord customer : customers) print (customer.toString());
+		
+		print ("\nAddress");
+		for(AddressRecord address : addresses) print (address.toString());
+		
+	}
+	//==========================================================================================================
 	public static void main(String[] args) {
 				Main main = new Main();		
         String userName = "test";
@@ -65,9 +99,14 @@ public class Main {
            System.out.println("Database Version Number : " + conn.getMetaData().getDatabaseMajorVersion());
 					 DSLContext dsl = DSL.using(conn, SQLDialect.MYSQL);
 
-					 main.singleCustomBeanRecord(dsl);
-					 main.multipleCustomBeanRecord(dsl);
-					 main.multipleGenericBeanRecord (dsl);
+					 //=== Select Statements
+					 //main.singleCustomBeanRecord(dsl);
+					 //main.multipleCustomBeanRecord(dsl);
+					 //main.multipleGenericBeanRecord (dsl);
+					 //main.joinGenericBeanRecord(dsl);
+					 
+					 //=== Update Statements
+					 main.update(dsl);
         } 
         // For the sake of this tutorial, let's keep exception handling simple
         catch (Exception e) {
