@@ -21,6 +21,7 @@ import org.jooq.impl.DSL;
 import static org.jooq.impl.DSL.row;
 
 
+
 public class Main {
 	
 	
@@ -94,11 +95,11 @@ public class Main {
 		print ("\nUpdating Customer Last Name.");
 		int rowsUpdate = create.update(CUSTOMER)
 						.set(CUSTOMER.LAST_NAME,
-										select(ADDRESS.CITY)
-														.from(ADDRESS)
-														.where(ADDRESS.ADDRESS_ID.equal(CUSTOMER.CUSTOMER_ID))
-										)
-						.where(CUSTOMER.CUSTOMER_ID.in(37))
+									create.select(ADDRESS.CITY)
+													.from(ADDRESS)
+													.where(ADDRESS.CUSTOMER_ID.equal(CUSTOMER.CUSTOMER_ID))
+									)
+						.where(CUSTOMER.CUSTOMER_ID.in(29))
 						.execute();
 		print(rowsUpdate + " rows Updated");
 	}
